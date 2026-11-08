@@ -1,7 +1,7 @@
 {
  "v": 1,
- "stand": "2026-11-08T20:50:36Z",
- "anzahl": 65649,
+ "stand": "2026-11-08T21:32:11Z",
+ "anzahl": 65686,
  "kacheln": [
   "47_10",
   "47_11",
@@ -102,7 +102,7 @@
    "stand": "2026-11-08",
    "ebene": "glas",
    "anzahl": 555,
-   "zusaetzlich": 85
+   "zusaetzlich": 42
   },
   {
    "key": "norderstedt",
@@ -182,7 +182,7 @@
    "stand": "2026-11-08",
    "ebene": "glas",
    "anzahl": 315,
-   "zusaetzlich": 87
+   "zusaetzlich": 86
   },
   {
    "key": "herne",
@@ -282,7 +282,7 @@
    "stand": "2026-11-08",
    "ebene": "glas",
    "anzahl": 112,
-   "zusaetzlich": 93
+   "zusaetzlich": 91
   },
   {
    "key": "hof-hamburg",
@@ -392,7 +392,207 @@
    "stand": "2026-11-08",
    "ebene": "deponien",
    "anzahl": 22,
+   "zusaetzlich": 14
+  },
+  {
+   "key": "rvr-glas",
+   "name": "Regionalverband Ruhr (Containerstandorte)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Regionalverband Ruhr (RVR)",
+   "stand": "2026-11-08",
+   "ebene": "glas",
+   "anzahl": 642,
+   "zusaetzlich": 83
+  },
+  {
+   "key": "hof-rvr",
+   "name": "Regionalverband Ruhr (Recyclinghöfe)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Regionalverband Ruhr (RVR)",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 97,
+   "zusaetzlich": 29
+  },
+  {
+   "key": "hof-landkreis-rostock",
+   "name": "Landkreis Rostock (Wertstoffhöfe)",
+   "lizenz": "CC0",
+   "namensnennung": "Landkreis Rostock",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 11,
+   "zusaetzlich": 6
+  },
+  {
+   "key": "kl-hamburg",
+   "name": "Hamburg (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 47,
+   "zusaetzlich": 36
+  },
+  {
+   "key": "kl-kiel",
+   "name": "Kiel (Altkleider)",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Landeshauptstadt Kiel",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 164,
+   "zusaetzlich": 58
+  },
+  {
+   "key": "kl-luebeck",
+   "name": "Lübeck (Altkleider)",
+   "lizenz": "ODbL 1.0",
+   "namensnennung": "Entsorgungsbetriebe Lübeck",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 132,
+   "zusaetzlich": 32
+  },
+  {
+   "key": "kl-norderstedt",
+   "name": "Norderstedt (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Norderstedt",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 1,
+   "zusaetzlich": 0
+  },
+  {
+   "key": "kl-koeln",
+   "name": "Köln (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "AWB Abfallwirtschaftsbetriebe Köln",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 534,
+   "zusaetzlich": 211
+  },
+  {
+   "key": "kl-muenster",
+   "name": "Münster (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Münster",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 23,
+   "zusaetzlich": 12
+  },
+  {
+   "key": "kl-essen",
+   "name": "Essen (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Essen",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 336,
+   "zusaetzlich": 60
+  },
+  {
+   "key": "kl-gelsenkirchen",
+   "name": "Gelsenkirchen (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "Stadt Gelsenkirchen / Gelsendienste",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 207,
+   "zusaetzlich": 79
+  },
+  {
+   "key": "kl-herne",
+   "name": "Herne (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "Stadt Herne",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 96,
+   "zusaetzlich": 7
+  },
+  {
+   "key": "kl-rvr",
+   "name": "Regionalverband Ruhr (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Regionalverband Ruhr (RVR)",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 359,
+   "zusaetzlich": 41
+  },
+  {
+   "key": "kl-dorsten",
+   "name": "Dorsten (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Dorsten / Entsorgungsbetrieb Dorsten",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 67,
+   "zusaetzlich": 26
+  },
+  {
+   "key": "kl-herford",
+   "name": "Kreis Herford (Altkleider)",
+   "lizenz": "freie Nutzung (Kreis Herford)",
+   "namensnennung": "Kreis Herford",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 35,
+   "zusaetzlich": 22
+  },
+  {
+   "key": "kl-trier",
+   "name": "Trier (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Trier / A.R.T. Trier",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 38,
    "zusaetzlich": 15
+  },
+  {
+   "key": "kl-mannheim",
+   "name": "Mannheim (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Mannheim",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 212,
+   "zusaetzlich": 90
+  },
+  {
+   "key": "kl-muenchen",
+   "name": "München (Altkleider)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 261,
+   "zusaetzlich": 70
+  },
+  {
+   "key": "kl-regensburg",
+   "name": "Regensburg (Altkleider)",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Stadt Regensburg",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 111,
+   "zusaetzlich": 63
+  },
+  {
+   "key": "kl-memmingen",
+   "name": "Memmingen (Altkleider)",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Stadt Memmingen",
+   "stand": "2026-11-08",
+   "ebene": "kleider",
+   "anzahl": 22,
+   "zusaetzlich": 16
   }
  ],
  "ebenen": {
@@ -463,7 +663,7 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 5147
+   "anzahl": 5182
   },
   "deponien": {
    "kacheln": [
@@ -531,7 +731,78 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 3793
+   "anzahl": 3792
+  },
+  "kleider": {
+   "kacheln": [
+    "47_10",
+    "47_11",
+    "47_12",
+    "47_13",
+    "47_7",
+    "47_8",
+    "47_9",
+    "48_10",
+    "48_11",
+    "48_12",
+    "48_13",
+    "48_7",
+    "48_8",
+    "48_9",
+    "49_10",
+    "49_11",
+    "49_12",
+    "49_13",
+    "49_6",
+    "49_7",
+    "49_8",
+    "49_9",
+    "50_10",
+    "50_11",
+    "50_12",
+    "50_13",
+    "50_14",
+    "50_5",
+    "50_6",
+    "50_7",
+    "50_8",
+    "50_9",
+    "51_10",
+    "51_11",
+    "51_12",
+    "51_13",
+    "51_14",
+    "51_6",
+    "51_7",
+    "51_8",
+    "51_9",
+    "52_10",
+    "52_11",
+    "52_12",
+    "52_13",
+    "52_14",
+    "52_6",
+    "52_7",
+    "52_8",
+    "52_9",
+    "53_10",
+    "53_11",
+    "53_12",
+    "53_13",
+    "53_14",
+    "53_6",
+    "53_7",
+    "53_8",
+    "53_9",
+    "54_10",
+    "54_11",
+    "54_12",
+    "54_13",
+    "54_14",
+    "54_8",
+    "54_9"
+   ],
+   "anzahl": 41021
   }
  }
 }
