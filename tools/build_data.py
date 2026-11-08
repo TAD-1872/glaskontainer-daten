@@ -4,9 +4,10 @@ Erzeugt die Container-Datei für die App "Glaskontainer".
 Fragt einmal (wöchentlich) alle Altglas-Container in Deutschland bei OpenStreetMap (Overpass) ab und
 schreibt sie in Kacheln von 1 × 1 Grad:  cells/<breite>_<länge>.json  (z. B. cells/53_9.json)
 Jede Kachel: {"v":1, "t":"<Stand>", "c":[[id, lat, lon, titel, [details...]], ...]}
-Dazu meta.json mit Stand, Anzahl und Liste der Kacheln.
+Zusätzlich amtliche Listen (tools/amtlich.py): Zeilen mit 6. Feld = Quellen-Schlüssel, nur Standorte,
+die nicht schon (≤ 60 m) in OpenStreetMap sind. Dazu meta.json mit Stand, Anzahl, Kacheln und Quellen.
 
-Daten © OpenStreetMap-Mitwirkende, Lizenz ODbL 1.0.
+Daten © OpenStreetMap-Mitwirkende, Lizenz ODbL 1.0; amtliche Daten siehe meta.json "quellen".
 Aufruf:  python tools/build_data.py <ausgabeordner>
 """
 import json
@@ -18,11 +19,16 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import amtlich  # noqa: E402
+
+GLEICH_M = 60  # amtlicher Eintrag so nah an einem OSM-Container = derselbe Standort
+
 UA = "Glaskontainer-App-Datenbau/1.0 (privat)"
 SERVERS = [
     "https://overpass-api.de/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
 ]
 QUERY = """[out:json][timeout:600];
 area["ISO3166-1"="DE"][admin_level=2]->.de;
@@ -74,6 +80,39 @@ def details(tags):
     return out
 
 
+def _abstand_m(lat1, lon1, lat2, lon2):
+    dy = (lat2 - lat1) * 111320.0
+    dx = (lon2 - lon1) * 111320.0 * math.cos(math.radians((lat1 + lat2) / 2))
+    return math.hypot(dx, dy)
+
+
+def amtliche_listen(out_dir):
+    """Lädt alle amtlichen Listen; bei Fehler die gespeicherte Kopie aus amtlich/<key>.json."""
+    ordner = os.path.join(out_dir, "amtlich")
+    os.makedirs(ordner, exist_ok=True)
+    ergebnis = []
+    for src in amtlich.QUELLEN:
+        datei = os.path.join(ordner, src["key"] + ".json")
+        stand = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        try:
+            liste = amtlich.standorte(src, amtlich.laden(src))
+            if not liste:
+                raise RuntimeError("keine Standorte")
+            with open(datei, "w", encoding="utf-8") as f:
+                json.dump({"stand": stand, "c": liste}, f, ensure_ascii=False, separators=(",", ":"))
+            print(f"amtlich {src['key']}: {len(liste)}")
+        except Exception as e:  # noqa: BLE001
+            if not os.path.exists(datei):
+                print(f"amtlich {src['key']}: nicht erreichbar ({e}), keine alte Kopie", file=sys.stderr)
+                continue
+            with open(datei, encoding="utf-8") as f:
+                alt = json.load(f)
+            liste, stand = [tuple(x) for x in alt["c"]], alt["stand"]
+            print(f"amtlich {src['key']}: nicht erreichbar ({e}), alte Kopie vom {stand}: {len(liste)}", file=sys.stderr)
+        ergebnis.append((src, stand, liste))
+    return ergebnis
+
+
 def main(out_dir):
     result = fetch()
     stand = result.get("osm3s", {}).get("timestamp_osm_base") or datetime.now(timezone.utc).isoformat()
@@ -87,6 +126,38 @@ def main(out_dir):
         row = [f"osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), title(tags), details(tags)]
         key = f"{math.floor(lat)}_{math.floor(lon)}"
         cells.setdefault(key, []).append(row)
+
+    # Raster (ca. 110 m) der OSM-Container für den Abgleich
+    raster = {}
+    for rows in cells.values():
+        for row in rows:
+            raster.setdefault((math.floor(row[1] * 1000), math.floor(row[2] * 1000)), []).append(row)
+
+    quellen = []
+    for src, q_stand, liste in amtliche_listen(out_dir):
+        neu = 0
+        for sid, lat, lon, titel, det in liste:
+            i, j = math.floor(lat * 1000), math.floor(lon * 1000)
+            best, best_d = None, GLEICH_M
+            for di in (-1, 0, 1):
+                for dj in (-1, 0, 1):
+                    for row in raster.get((i + di, j + dj), []):
+                        d = _abstand_m(lat, lon, row[1], row[2])
+                        if d <= best_d:
+                            best, best_d = row, d
+            if best is not None:
+                hinweis = "Auch in der amtlichen Liste: " + src["name"]
+                if hinweis not in best[4]:
+                    best[4].append(hinweis)
+                continue
+            key = f"{math.floor(lat)}_{math.floor(lon)}"
+            cells.setdefault(key, []).append([sid, lat, lon, titel, list(det), src["key"]])
+            neu += 1
+        quellen.append({
+            "key": src["key"], "name": src["name"], "lizenz": src["lizenz"],
+            "namensnennung": src["namensnennung"], "stand": q_stand,
+            "anzahl": len(liste), "zusaetzlich": neu,
+        })
 
     cell_dir = os.path.join(out_dir, "cells")
     os.makedirs(cell_dir, exist_ok=True)
@@ -104,10 +175,12 @@ def main(out_dir):
         "anzahl": total,
         "kacheln": sorted(cells.keys()),
         "lizenz": "Daten © OpenStreetMap-Mitwirkende, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+        "quellen": quellen,
     }
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=1)
-    print(f"{total} Container in {len(cells)} Kacheln, Stand {stand}")
+    print(f"{total} Container in {len(cells)} Kacheln, Stand {stand}, "
+          f"davon {sum(q['zusaetzlich'] for q in quellen)} nur aus amtlichen Listen")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 {
  "v": 1,
- "stand": "2026-11-08T13:24:35Z",
- "anzahl": 65852,
+ "stand": "2026-11-08T19:24:02Z",
+ "anzahl": 66736,
  "kacheln": [
   "47_10",
   "47_11",
@@ -72,5 +72,169 @@
   "54_9",
   "55_8"
  ],
- "lizenz": "Daten © OpenStreetMap-Mitwirkende, ODbL 1.0 (https://www.openstreetmap.org/copyright)"
+ "lizenz": "Daten © OpenStreetMap-Mitwirkende, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+ "quellen": [
+  {
+   "key": "hamburg",
+   "name": "Hamburg",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
+   "stand": "2026-11-08",
+   "anzahl": 793,
+   "zusaetzlich": 128
+  },
+  {
+   "key": "kiel",
+   "name": "Kiel",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Landeshauptstadt Kiel",
+   "stand": "2026-11-08",
+   "anzahl": 296,
+   "zusaetzlich": 104
+  },
+  {
+   "key": "luebeck",
+   "name": "Lübeck",
+   "lizenz": "ODbL 1.0",
+   "namensnennung": "Entsorgungsbetriebe Lübeck",
+   "stand": "2026-11-08",
+   "anzahl": 555,
+   "zusaetzlich": 85
+  },
+  {
+   "key": "norderstedt",
+   "name": "Norderstedt",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Norderstedt",
+   "stand": "2026-11-08",
+   "anzahl": 28,
+   "zusaetzlich": 8
+  },
+  {
+   "key": "vorpommern-greifswald",
+   "name": "Landkreis Vorpommern-Greifswald",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "©Landkreis Vorpommern-Greifswald",
+   "stand": "2026-11-08",
+   "anzahl": 13,
+   "zusaetzlich": 13
+  },
+  {
+   "key": "aachen",
+   "name": "Aachen",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Aachen",
+   "stand": "2026-11-08",
+   "anzahl": 190,
+   "zusaetzlich": 34
+  },
+  {
+   "key": "muenster",
+   "name": "Münster",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Münster",
+   "stand": "2026-11-08",
+   "anzahl": 249,
+   "zusaetzlich": 64
+  },
+  {
+   "key": "grevenbroich",
+   "name": "Grevenbroich",
+   "lizenz": "CC0",
+   "namensnennung": "Stadt Grevenbroich / Rhein-Kreis Neuss",
+   "stand": "2026-11-08",
+   "anzahl": 78,
+   "zusaetzlich": 18
+  },
+  {
+   "key": "meerbusch",
+   "name": "Meerbusch",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Meerbusch / Rhein-Kreis Neuss",
+   "stand": "2026-11-08",
+   "anzahl": 92,
+   "zusaetzlich": 38
+  },
+  {
+   "key": "essen",
+   "name": "Essen",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Essen",
+   "stand": "2026-11-08",
+   "anzahl": 513,
+   "zusaetzlich": 33
+  },
+  {
+   "key": "gelsenkirchen",
+   "name": "Gelsenkirchen",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "Stadt Gelsenkirchen / Gelsendienste",
+   "stand": "2026-11-08",
+   "anzahl": 315,
+   "zusaetzlich": 87
+  },
+  {
+   "key": "herne",
+   "name": "Herne",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "Stadt Herne",
+   "stand": "2026-11-08",
+   "anzahl": 212,
+   "zusaetzlich": 19
+  },
+  {
+   "key": "trier",
+   "name": "Trier",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Trier / A.R.T. Trier",
+   "stand": "2026-11-08",
+   "anzahl": 107,
+   "zusaetzlich": 23
+  },
+  {
+   "key": "mannheim",
+   "name": "Mannheim",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Mannheim",
+   "stand": "2026-11-08",
+   "anzahl": 292,
+   "zusaetzlich": 86
+  },
+  {
+   "key": "muenchen",
+   "name": "München",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
+   "stand": "2026-11-08",
+   "anzahl": 831,
+   "zusaetzlich": 52
+  },
+  {
+   "key": "regensburg",
+   "name": "Regensburg",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Stadt Regensburg",
+   "stand": "2026-11-08",
+   "anzahl": 134,
+   "zusaetzlich": 51
+  },
+  {
+   "key": "amberg",
+   "name": "Amberg",
+   "lizenz": "CC BY 3.0",
+   "namensnennung": "Stadt Amberg",
+   "stand": "2026-11-08",
+   "anzahl": 36,
+   "zusaetzlich": 14
+  },
+  {
+   "key": "memmingen",
+   "name": "Memmingen",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Stadt Memmingen",
+   "stand": "2026-11-08",
+   "anzahl": 46,
+   "zusaetzlich": 28
+  }
+ ]
 }
