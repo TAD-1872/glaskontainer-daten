@@ -124,8 +124,8 @@ def deponie_details(tags):
     return out
 
 
-def ebene_schreiben(out_dir, ordner, result, titel, details_fn):
-    """Schreibt eine Zusatz-Ebene (Wertstoffhöfe, Deponien) in <ordner>/<lat>_<lon>.json."""
+def ebene_zeilen(result, titel, details_fn):
+    """OSM-Ergebnis → Kacheln {"<lat>_<lon>": [zeilen]} für eine Zusatz-Ebene (Wertstoffhöfe, Deponien)."""
     cells = {}
     for el in result["elements"]:
         lat = el.get("lat", el.get("center", {}).get("lat"))
@@ -135,14 +135,18 @@ def ebene_schreiben(out_dir, ordner, result, titel, details_fn):
         tags = el.get("tags", {})
         row = [f"osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), tags.get("name") or titel, details_fn(tags)]
         cells.setdefault(f"{math.floor(lat)}_{math.floor(lon)}", []).append(row)
+    return cells
+
+
+def kacheln_schreiben(out_dir, ordner, cells, stand):
     pfad = os.path.join(out_dir, ordner)
     os.makedirs(pfad, exist_ok=True)
-    for name in os.listdir(pfad):
+    for name in os.listdir(pfad):  # alte Kacheln entfernen
         os.remove(os.path.join(pfad, name))
     for key, rows in cells.items():
         rows.sort(key=lambda r: r[0])
         with open(os.path.join(pfad, key + ".json"), "w", encoding="utf-8") as f:
-            json.dump({"v": 1, "c": rows}, f, ensure_ascii=False, separators=(",", ":"))
+            json.dump({"v": 1, "t": stand, "c": rows}, f, ensure_ascii=False, separators=(",", ":"))
     anzahl = sum(len(r) for r in cells.values())
     print(f"{ordner}: {anzahl} in {len(cells)} Kacheln")
     return {"kacheln": sorted(cells.keys()), "anzahl": anzahl}
@@ -181,6 +185,24 @@ def amtliche_listen(out_dir):
     return ergebnis
 
 
+# Wie nah ein amtlicher Eintrag an einem OSM-Eintrag sein muss, um als derselbe Ort zu gelten (Meter)
+GLEICH_M_EBENE = {"glas": GLEICH_M, "hoefe": 250, "deponien": 800}
+
+
+def _zusammenfuehren(best, det, name):
+    """Amtliche Angaben in den OSM-Eintrag übernehmen; amtliche Öffnungszeiten u. Ä. ersetzen die aus OSM."""
+    vorhanden = best[4]
+    for zeile in det:
+        if ":" in zeile:
+            praefix = zeile.split(":", 1)[0] + ":"
+            vorhanden[:] = [z for z in vorhanden if not z.startswith(praefix)]
+        if zeile not in vorhanden:
+            vorhanden.append(zeile)
+    hinweis = "Auch in der amtlichen Liste: " + name
+    if hinweis not in vorhanden:
+        vorhanden.append(hinweis)
+
+
 def main(out_dir):
     result = fetch()
     stand = result.get("osm3s", {}).get("timestamp_osm_base") or datetime.now(timezone.utc).isoformat()
@@ -197,66 +219,70 @@ def main(out_dir):
         key = f"{math.floor(lat)}_{math.floor(lon)}"
         cells.setdefault(key, []).append(row)
 
-    ebenen = {
-        "hoefe": ebene_schreiben(out_dir, "hoefe", fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
-        "deponien": ebene_schreiben(out_dir, "deponien", fetch(QUERY_DEPONIEN, 1000), "Deponie", deponie_details),
+    ebenen_zellen = {
+        "glas": cells,
+        "hoefe": ebene_zeilen(fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
+        "deponien": ebene_zeilen(fetch(QUERY_DEPONIEN, 1000), "Deponie", deponie_details),
     }
 
-    # Raster (ca. 110 m) der OSM-Container für den Abgleich
+    # Raster (ca. 110 m) der OSM-Einträge je Ebene für den Abgleich
     raster = {}
-    for rows in cells.values():
-        for row in rows:
-            raster.setdefault((math.floor(row[1] * 1000), math.floor(row[2] * 1000)), []).append(row)
+    for ebene, zellen in ebenen_zellen.items():
+        r = raster[ebene] = {}
+        for rows in zellen.values():
+            for row in rows:
+                r.setdefault((math.floor(row[1] * 1000), math.floor(row[2] * 1000)), []).append(row)
 
     quellen = []
     for src, q_stand, liste in amtliche_listen(out_dir):
+        ebene = src.get("ebene", "glas")
+        grenze = GLEICH_M_EBENE[ebene]
+        reichweite = math.ceil(grenze / 70)  # Rasterfelder sind in Nord-Süd-Richtung ca. 110 m, Ost-West ca. 70 m
         neu = 0
         for sid, lat, lon, titel, det in liste:
             i, j = math.floor(lat * 1000), math.floor(lon * 1000)
-            best, best_d = None, GLEICH_M
-            for di in (-1, 0, 1):
-                for dj in (-1, 0, 1):
-                    for row in raster.get((i + di, j + dj), []):
+            best, best_d = None, grenze
+            for di in range(-reichweite, reichweite + 1):
+                for dj in range(-reichweite, reichweite + 1):
+                    for row in raster[ebene].get((i + di, j + dj), []):
                         d = _abstand_m(lat, lon, row[1], row[2])
                         if d <= best_d:
                             best, best_d = row, d
             if best is not None:
-                hinweis = "Auch in der amtlichen Liste: " + src["name"]
-                if hinweis not in best[4]:
-                    best[4].append(hinweis)
+                if ebene == "glas":
+                    hinweis = "Auch in der amtlichen Liste: " + src["name"]
+                    if hinweis not in best[4]:
+                        best[4].append(hinweis)
+                else:
+                    _zusammenfuehren(best, det, src["name"])
                 continue
             key = f"{math.floor(lat)}_{math.floor(lon)}"
-            cells.setdefault(key, []).append([sid, lat, lon, titel, list(det), src["key"]])
+            ebenen_zellen[ebene].setdefault(key, []).append([sid, lat, lon, titel, list(det), src["key"]])
             neu += 1
         quellen.append({
             "key": src["key"], "name": src["name"], "lizenz": src["lizenz"],
-            "namensnennung": src["namensnennung"], "stand": q_stand,
+            "namensnennung": src["namensnennung"], "stand": q_stand, "ebene": ebene,
             "anzahl": len(liste), "zusaetzlich": neu,
         })
 
-    cell_dir = os.path.join(out_dir, "cells")
-    os.makedirs(cell_dir, exist_ok=True)
-    for name in os.listdir(cell_dir):  # alte Kacheln entfernen
-        os.remove(os.path.join(cell_dir, name))
-    total = 0
-    for key, rows in sorted(cells.items()):
-        rows.sort(key=lambda r: r[0])
-        total += len(rows)
-        with open(os.path.join(cell_dir, key + ".json"), "w", encoding="utf-8") as f:
-            json.dump({"v": 1, "t": stand, "c": rows}, f, ensure_ascii=False, separators=(",", ":"))
+    glas = kacheln_schreiben(out_dir, "cells", cells, stand)
+    ebenen = {
+        "hoefe": kacheln_schreiben(out_dir, "hoefe", ebenen_zellen["hoefe"], stand),
+        "deponien": kacheln_schreiben(out_dir, "deponien", ebenen_zellen["deponien"], stand),
+    }
     meta = {
         "v": 1,
         "stand": stand,
-        "anzahl": total,
-        "kacheln": sorted(cells.keys()),
+        "anzahl": glas["anzahl"],
+        "kacheln": glas["kacheln"],
         "lizenz": "Daten © OpenStreetMap-Mitwirkende, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
         "quellen": quellen,
         "ebenen": ebenen,
     }
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=1)
-    print(f"{total} Container in {len(cells)} Kacheln, Stand {stand}, "
-          f"davon {sum(q['zusaetzlich'] for q in quellen)} nur aus amtlichen Listen")
+    for e in ("glas", "hoefe", "deponien"):
+        print(f"{e}: davon {sum(q['zusaetzlich'] for q in quellen if q['ebene'] == e)} nur aus amtlichen Listen")
 
 
 if __name__ == "__main__":

@@ -40,6 +40,9 @@ def _enthaelt(feld, wort):
     return lambda p: wort.lower() in str(p.get(feld) or "").lower()
 
 
+LKR_REGENSBURG = ("https://geoportal.landkreis-regensburg.de/ogcapi/datasets/entsorgungseinrichtungen/collections/"
+                  "Entsorgungseinrichtungen/items?bulk=true&f=json")
+
 QUELLEN = [
     dict(key="hamburg", name="Hamburg", lizenz=DL_BY,
          namensnennung="Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
@@ -127,6 +130,63 @@ QUELLEN = [
          url="https://www.memmingen.de/fileadmin/opendata/amt54_abfall/Memmingen_Wertstoffcontainer_gpkg.zip",
          format="gpkg-zip", utm=32,
          nur=_ja("Weissglas", "Gruenglas", "Braunglas"), title="{Lage}", details=["{Gebiet}"]),
+    # ---- Glascontainer: weitere ----
+    dict(key="landkreis-regensburg", name="Landkreis Regensburg", lizenz="CC0", namensnennung="Landkreis Regensburg",
+         url=LKR_REGENSBURG, nur=lambda p: p.get("unterkategorie") == "Glascontainer",
+         title="{name}", details=["{adresse}"], ersetzen={"|": " · "}),
+
+    # ---- Wertstoffhöfe / Recyclinghöfe (Ebene "hoefe") ----
+    dict(key="hof-hamburg", ebene="hoefe", name="Hamburg (Recyclinghöfe)", lizenz=DL_BY,
+         namensnennung="Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
+         url="https://geodienste.hamburg.de/HH_WFS_abfall_recycling?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature"
+             "&typeNames=de.hh.up:abfall_recycling_6_recyhof&outputFormat=application/geo%2Bjson&srsName=EPSG:4326",
+         title="{langbez}", details=["Öffnungszeiten: {oeffnungszeiten}", "{standort}, {stadtteil}"]),
+    dict(key="hof-kiel", ebene="hoefe", name="Kiel (Recyclinghöfe)", lizenz="CC BY 4.0", namensnennung="Landeshauptstadt Kiel",
+         url="https://ims.kiel.de/geodatenextern/services/Stadtplan/LHKielWmsWfs/MapServer/WFSServer"
+             "?request=GetFeature&service=WFS&typeName=Recyclinghoefe&outputFormat=geoJSON",
+         title="Recyclinghof {Bezeichnung}", details=["{Internet}"]),
+    dict(key="hof-luebeck", ebene="hoefe", name="Lübeck (Wertstoffhöfe)", lizenz="ODbL 1.0", namensnennung="Entsorgungsbetriebe Lübeck",
+         url="https://umap.openstreetmap.de/de/datalayer/49064/aa47e154-d9ae-4a33-9f9c-32e52a0c3188/",
+         title="{name}", details=["{description}"]),
+    dict(key="hof-aachen", ebene="hoefe", name="Aachen (Recyclinghöfe)", lizenz=DL_BY, namensnennung="Stadt Aachen / Aachener Stadtbetrieb",
+         url="https://geoserver.aachen.de/opendata/abfallnavi/ows?service=WFS&request=GetFeature"
+             "&typeName=abfallnavi%3ARecyclingh%C3%B6fe&outputFormat=application%2Fjson&srsName=EPSG:4326",
+         title="Recyclinghof {anlagenbezeichnung}", details=["Öffnungszeiten: {oeffnungszeiten}", "{strasse} {hausnummer}, {plz} {ort}"]),
+    dict(key="hof-herne", ebene="hoefe", name="Herne (Wertstoffhof)", lizenz=DL_ZERO, namensnennung="Stadt Herne",
+         url="https://geodaten.herne.de/geoserver/abfall/entsorgungskarte?SERVICE=WFS&REQUEST=GetFeature"
+             "&TYPENAME=entsorgungsanlagen&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326",
+         nur=_enthaelt("beschr", "Wertstoffhof"), title="Wertstoffhof", details=["{stndplz} {hsnr}"]),
+    dict(key="hof-dresden", ebene="hoefe", name="Dresden (Wertstoffhöfe)", lizenz=DL_BY, namensnennung="Landeshauptstadt Dresden",
+         url="https://kommisdd.dresden.de/net3/public/ogc.ashx?NodeId=748&Service=WFS&Request=GetFeature&Version=2.0.0"
+             "&TypeNames=cls:L566&outputFormat=application/geo%2Bjson&srsName=EPSG:4326",
+         title="{name}", details=["Öffnungszeiten: {oef_text}", "{url}"]),
+    dict(key="hof-muenchen", ebene="hoefe", name="München (Wertstoffhöfe)", lizenz=DL_BY,
+         namensnennung="Landeshauptstadt München, AWM / GeodatenService München",
+         url="https://geoportal.muenchen.de/geoserver/gsm_wfs/ows?service=WFS&version=1.1.0&request=GetFeature"
+             "&typeName=gsm_wfs:awm_wertstoffhoefe&outputFormat=application/json&srsName=EPSG:4326",
+         title="Wertstoffhof {adresse}", details=["{link}"]),
+    dict(key="hof-landkreis-regensburg", ebene="hoefe", name="Landkreis Regensburg (Wertstoffhöfe)", lizenz="CC0",
+         namensnennung="Landkreis Regensburg", url=LKR_REGENSBURG,
+         nur=lambda p: p.get("unterkategorie") == "Wertstoffhöfe",
+         title="Wertstoffhof {name}", details=["{adresse}"], ersetzen={"|": " · "}),
+
+    # ---- Deponien (Ebene "deponien"): nur Deponien, auf denen noch abgelagert wird ----
+    dict(key="deponie-nrw", ebene="deponien", name="Nordrhein-Westfalen (Deponien)", lizenz=DL_BY,
+         namensnennung="Land NRW / Landesamt für Natur, Umwelt und Klima (OpenAddisWeb)",
+         url="https://www.opengeodata.nrw.de/produkte/umwelt_klima/anlagen_abfall/abfall/addis/OpenAddisWeb-Deponien_EPSG25832_Shape.zip",
+         format="nrw-deponien", utm=32, nur=lambda p: p.get("phase") == "Ablagerungsphase",
+         title="{name}", details=["{klasse}", "Betreiber: {betreiber}"]),
+    dict(key="deponie-brandenburg", ebene="deponien", name="Brandenburg (Deponien)", lizenz=DL_BY,
+         namensnennung="Landesamt für Umwelt Brandenburg (LfU)",
+         url="https://data.geobasis-bb.de/geofachdaten/Luft_und_Luftqualitaet/depo.zip",
+         format="shp-zip", utm=33, nur=_ja("Phase_a"),
+         title="Deponie {Bez}", details=["Deponieklasse {klassen}"]),
+    dict(key="deponie-saarland", ebene="deponien", name="Saarland (Deponien)", lizenz="CC BY 4.0",
+         namensnennung="Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz des Saarlandes",
+         url="https://geoportal.saarland.de/arcgis/services/Internet/Abfallbeseitigung/MapServer/WFSServer"
+             "?request=GetFeature&VERSION=2.0.0&SERVICE=WFS&typeNames=Abfallbeseitigung:Deponien",
+         format="gml", utm=32, nur=_enthaelt("phase", "Ablagerung"),
+         title="{name}", details=["Deponieklasse {klasse}"]),
 ]
 
 
@@ -221,6 +281,110 @@ def _gpkg_zip(data):
     return out
 
 
+def _dbf(b, enc):
+    n = struct.unpack("<I", b[4:8])[0]
+    kopf, satz = struct.unpack("<HH", b[8:12])
+    felder, i = [], 32
+    while b[i] != 0x0D:
+        felder.append((b[i:i + 11].split(b"\0")[0].decode("ascii", "replace"), b[i + 16]))
+        i += 32
+    out = []
+    for k in range(n):
+        r = b[kopf + k * satz:kopf + (k + 1) * satz]
+        if r[:1] == b"*":  # gelöscht
+            continue
+        o, d = 1, {}
+        for name, laenge in felder:
+            d[name] = r[o:o + laenge].decode(enc, "replace").strip()
+            o += laenge
+        out.append(d)
+    return out
+
+
+def _shp(b):
+    """Mittelpunkte aller Formen einer .shp-Datei (Punkt = Punkt, Fläche/Linie = Mitte des Umrisses)."""
+    out, o = [], 100
+    while o + 8 <= len(b):
+        laenge = struct.unpack(">i", b[o + 4:o + 8])[0] * 2
+        inhalt = b[o + 8:o + 8 + laenge]
+        typ = struct.unpack("<i", inhalt[:4])[0] if len(inhalt) >= 4 else 0
+        if typ in (1, 11, 21):
+            out.append(struct.unpack("<dd", inhalt[4:20]))
+        elif typ in (3, 5, 13, 15, 23, 25):
+            x0, y0, x1, y1 = struct.unpack("<dddd", inhalt[4:36])
+            out.append(((x0 + x1) / 2, (y0 + y1) / 2))
+        else:
+            out.append(None)
+        o += 8 + laenge
+    return out
+
+
+def _shp_zip(data, name=None):
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        namen = z.namelist()
+        basis = name or next(n for n in namen if n.lower().endswith(".shp"))[:-4]
+        cpg = next((n for n in namen if n.lower() == (basis + ".cpg").lower()), None)
+        enc = z.read(cpg).decode("ascii", "replace").strip() if cpg else "cp1252"
+        if enc.upper().replace("-", "") == "UTF8":
+            enc = "utf-8"
+        elif enc.upper() in ("ANSI", "1252"):
+            enc = "cp1252"
+        punkte = _shp(z.read(basis + ".shp"))
+        saetze = _dbf(z.read(basis + ".dbf"), enc)
+    out = []
+    for p, d in zip(punkte, saetze):
+        if p:
+            # Brandenburg: Deponieklassen als lesbaren Text zusammenfassen
+            klassen = [k[2:] for k in ("Dk0", "Dk1", "Dk2", "Dk3") if d.get(k) == "1"]
+            if klassen:
+                d["klassen"] = ", ".join(klassen)
+            out.append((p[0], p[1], d))
+    return out
+
+
+def _xlsx_zeilen(data):
+    """Erste Tabelle einer Excel-Datei als Liste von Zeilen (nur Text/Zahlen)."""
+    import xml.etree.ElementTree as ET
+    ns = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        texte = []
+        if "xl/sharedStrings.xml" in z.namelist():
+            texte = ["".join(t.text or "" for t in si.iter(ns + "t"))
+                     for si in ET.fromstring(z.read("xl/sharedStrings.xml")).iter(ns + "si")]
+        blatt = ET.fromstring(z.read("xl/worksheets/sheet1.xml"))
+    zeilen = []
+    for r in blatt.iter(ns + "row"):
+        zeile = []
+        for c in r.iter(ns + "c"):
+            v = c.find(ns + "v")
+            v = v.text if v is not None else ""
+            zeile.append(texte[int(v)] if c.get("t") == "s" and v else v)
+        zeilen.append(zeile)
+    return zeilen
+
+
+def _nrw_deponien(data):
+    """NRW OpenAddisWeb: Deponie-Umrisse (Grenze.shp) + Liste mit Name, Klasse, Phase, Betreiber (Excel)."""
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        liste = next(n for n in z.namelist() if n.lower().startswith("deponien") and n.lower().endswith(".xlsx"))
+        zeilen = _xlsx_zeilen(z.read(liste))
+    info = {}
+    for z in zeilen[1:]:
+        if len(z) >= 5 and z[0]:
+            # Spalten laut Inhalt: Entsorgernummer, Bezeichnung, Deponieklasse, Betriebsphase, Betreiber
+            info[z[0]] = {"name": z[1], "klasse": z[2], "phase": z[3], "betreiber": z[4]}
+    lage = {}
+    for x, y, d in _shp_zip(data, "Grenze"):
+        lage.setdefault(d.get("ENR"), []).append((x, y))
+    out = []
+    for enr, punkte in lage.items():
+        if enr in info:
+            x = sum(p[0] for p in punkte) / len(punkte)
+            y = sum(p[1] for p in punkte) / len(punkte)
+            out.append((x, y, info[enr]))
+    return out
+
+
 def utm_zu_gps(e, n, zone):
     """Rechts-/Hochwert (ETRS89 / UTM) → (Breite, Länge). Genauigkeit ca. 1 m (wie in der App)."""
     a = 6378137.0
@@ -256,7 +420,11 @@ def _sauber(v):
         return ""
     if isinstance(v, float) and v.is_integer():
         v = int(v)
-    t = str(v).strip()
+    t = str(v)
+    t = re.sub(r"<br\s*/?>", " ", t)
+    t = re.sub(r"\*\*Route:\*\*.*", "", t, flags=re.S)  # Navigationslink (uMap)
+    t = re.sub(r"\[\[.*?\]\]", "", t).replace("**", "")
+    t = re.sub(r"\(Hinweis:.*?\)", "", t, flags=re.S).strip()
     return "" if t.lower() in ("", "null", "none", "-", "–") else t
 
 
@@ -276,6 +444,10 @@ def rohdaten_lesen(src, data):
         return _csv(data, src)
     if fmt == "gpkg-zip":
         return _gpkg_zip(data)
+    if fmt == "shp-zip":
+        return _shp_zip(data)
+    if fmt == "nrw-deponien":
+        return _nrw_deponien(data)
     return _geojson(data)
 
 

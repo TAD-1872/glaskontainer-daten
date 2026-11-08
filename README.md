@@ -40,6 +40,16 @@ OSM-Container entfernt ist, gilt als derselbe Standort und wird nicht doppelt au
 | Regensburg | Stadt Regensburg | CC BY 4.0 |
 | Amberg | Stadt Amberg | CC BY 3.0 |
 | Memmingen | Stadt Memmingen | CC BY 4.0 |
+| Landkreis Regensburg | Landkreis Regensburg | CC0 |
+
+**Wertstoffhöfe / Recyclinghöfe** (Ebene `hoefe`; ein amtlicher Hof ≤ 250 m von einem OSM-Hof ergänzt diesen,
+amtliche Öffnungszeiten ersetzen die aus OSM): Hamburg (DL-DE BY 2.0), Kiel (CC BY 4.0), Lübeck – Entsorgungsbetriebe
+Lübeck (ODbL), Aachen (DL-DE BY 2.0), Herne (DL-DE Zero 2.0), Dresden (DL-DE BY 2.0), München – AWM (DL-DE BY 2.0),
+Landkreis Regensburg (CC0).
+
+**Deponien** (Ebene `deponien`, nur in der Ablagerungsphase; Abgleich mit OSM bis 800 m):
+Nordrhein-Westfalen – OpenAddisWeb, LANUK NRW (DL-DE BY 2.0), Brandenburg – Landesamt für Umwelt (DL-DE BY 2.0),
+Saarland – Umweltministerium (CC BY 4.0).
 
 Datenlizenz Deutschland: <https://www.govdata.de/dl-de/by-2-0> bzw. <https://www.govdata.de/dl-de/zero-2-0>.
 Die amtlichen Daten wurden übernommen, auf Glas-Standorte gefiltert, in GPS-Koordinaten umgerechnet und mit

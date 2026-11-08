@@ -1,7 +1,7 @@
 {
  "v": 1,
- "stand": "2026-11-08T20:30:12Z",
- "anzahl": 65556,
+ "stand": "2026-11-08T20:50:36Z",
+ "anzahl": 65649,
  "kacheln": [
   "47_10",
   "47_11",
@@ -80,6 +80,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 793,
    "zusaetzlich": 128
   },
@@ -89,6 +90,7 @@
    "lizenz": "CC BY 4.0",
    "namensnennung": "Landeshauptstadt Kiel",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 296,
    "zusaetzlich": 105
   },
@@ -98,6 +100,7 @@
    "lizenz": "ODbL 1.0",
    "namensnennung": "Entsorgungsbetriebe Lübeck",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 555,
    "zusaetzlich": 85
   },
@@ -107,6 +110,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Norderstedt",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 28,
    "zusaetzlich": 8
   },
@@ -116,6 +120,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "©Landkreis Vorpommern-Greifswald",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 13,
    "zusaetzlich": 13
   },
@@ -125,6 +130,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Aachen",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 190,
    "zusaetzlich": 34
   },
@@ -134,6 +140,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Münster",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 249,
    "zusaetzlich": 69
   },
@@ -143,6 +150,7 @@
    "lizenz": "CC0",
    "namensnennung": "Stadt Grevenbroich / Rhein-Kreis Neuss",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 78,
    "zusaetzlich": 18
   },
@@ -152,6 +160,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Meerbusch / Rhein-Kreis Neuss",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 92,
    "zusaetzlich": 39
   },
@@ -161,6 +170,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Essen",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 513,
    "zusaetzlich": 34
   },
@@ -170,6 +180,7 @@
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Gelsenkirchen / Gelsendienste",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 315,
    "zusaetzlich": 87
   },
@@ -179,6 +190,7 @@
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Herne",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 212,
    "zusaetzlich": 19
   },
@@ -188,6 +200,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Dorsten / Entsorgungsbetrieb Dorsten",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 115,
    "zusaetzlich": 30
   },
@@ -197,6 +210,7 @@
    "lizenz": "freie Nutzung (Kreis Herford)",
    "namensnennung": "Kreis Herford",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 238,
    "zusaetzlich": 111
   },
@@ -206,6 +220,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Trier / A.R.T. Trier",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 107,
    "zusaetzlich": 23
   },
@@ -215,6 +230,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Mannheim",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 292,
    "zusaetzlich": 86
   },
@@ -224,6 +240,7 @@
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 831,
    "zusaetzlich": 52
   },
@@ -233,6 +250,7 @@
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Regensburg",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 134,
    "zusaetzlich": 53
   },
@@ -242,6 +260,7 @@
    "lizenz": "CC BY 3.0",
    "namensnennung": "Stadt Amberg",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 36,
    "zusaetzlich": 14
   },
@@ -251,8 +270,129 @@
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Memmingen",
    "stand": "2026-11-08",
+   "ebene": "glas",
    "anzahl": 46,
    "zusaetzlich": 28
+  },
+  {
+   "key": "landkreis-regensburg",
+   "name": "Landkreis Regensburg",
+   "lizenz": "CC0",
+   "namensnennung": "Landkreis Regensburg",
+   "stand": "2026-11-08",
+   "ebene": "glas",
+   "anzahl": 112,
+   "zusaetzlich": 93
+  },
+  {
+   "key": "hof-hamburg",
+   "name": "Hamburg (Recyclinghöfe)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 12,
+   "zusaetzlich": 0
+  },
+  {
+   "key": "hof-kiel",
+   "name": "Kiel (Recyclinghöfe)",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Landeshauptstadt Kiel",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 4,
+   "zusaetzlich": 1
+  },
+  {
+   "key": "hof-luebeck",
+   "name": "Lübeck (Wertstoffhöfe)",
+   "lizenz": "ODbL 1.0",
+   "namensnennung": "Entsorgungsbetriebe Lübeck",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 3,
+   "zusaetzlich": 0
+  },
+  {
+   "key": "hof-aachen",
+   "name": "Aachen (Recyclinghöfe)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Stadt Aachen / Aachener Stadtbetrieb",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 3,
+   "zusaetzlich": 1
+  },
+  {
+   "key": "hof-herne",
+   "name": "Herne (Wertstoffhof)",
+   "lizenz": "Datenlizenz Deutschland – Zero 2.0",
+   "namensnennung": "Stadt Herne",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 1,
+   "zusaetzlich": 0
+  },
+  {
+   "key": "hof-dresden",
+   "name": "Dresden (Wertstoffhöfe)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Landeshauptstadt Dresden",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 15,
+   "zusaetzlich": 4
+  },
+  {
+   "key": "hof-muenchen",
+   "name": "München (Wertstoffhöfe)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 12,
+   "zusaetzlich": 0
+  },
+  {
+   "key": "hof-landkreis-regensburg",
+   "name": "Landkreis Regensburg (Wertstoffhöfe)",
+   "lizenz": "CC0",
+   "namensnennung": "Landkreis Regensburg",
+   "stand": "2026-11-08",
+   "ebene": "hoefe",
+   "anzahl": 39,
+   "zusaetzlich": 13
+  },
+  {
+   "key": "deponie-nrw",
+   "name": "Nordrhein-Westfalen (Deponien)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Land NRW / Landesamt für Natur, Umwelt und Klima (OpenAddisWeb)",
+   "stand": "2026-11-08",
+   "ebene": "deponien",
+   "anzahl": 98,
+   "zusaetzlich": 39
+  },
+  {
+   "key": "deponie-brandenburg",
+   "name": "Brandenburg (Deponien)",
+   "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
+   "namensnennung": "Landesamt für Umwelt Brandenburg (LfU)",
+   "stand": "2026-11-08",
+   "ebene": "deponien",
+   "anzahl": 12,
+   "zusaetzlich": 4
+  },
+  {
+   "key": "deponie-saarland",
+   "name": "Saarland (Deponien)",
+   "lizenz": "CC BY 4.0",
+   "namensnennung": "Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz des Saarlandes",
+   "stand": "2026-11-08",
+   "ebene": "deponien",
+   "anzahl": 22,
+   "zusaetzlich": 15
   }
  ],
  "ebenen": {
@@ -323,7 +463,7 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 5128
+   "anzahl": 5147
   },
   "deponien": {
    "kacheln": [
@@ -391,7 +531,7 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 3734
+   "anzahl": 3793
   }
  }
 }
