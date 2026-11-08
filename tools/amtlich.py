@@ -90,6 +90,16 @@ QUELLEN = [
          url="https://geodaten.herne.de/geoserver/abfall/entsorgungskarte?SERVICE=WFS&REQUEST=GetFeature"
              "&TYPENAME=wertstoffsammelstelle&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326",
          nur=_ja("glas"), title="{standplatz}", details=["{beschreibung}", "{bezirk}"]),
+    dict(key="dorsten", name="Dorsten", lizenz=DL_BY, namensnennung="Stadt Dorsten / Entsorgungsbetrieb Dorsten",
+         url="https://geoportal.dorsten.de/cgi-bin/qgis_mapserv.fcgi?map=/var/qgis/AAP-plus/openlayers/"
+             "qgis_EBD_stadtreinigung_extern2.qgs&SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&TYPENAME=Glascontainer"
+             "&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326",
+         title="{Standort}", details=[]),
+    dict(key="herford", name="Kreis Herford", lizenz="freie Nutzung (Kreis Herford)", namensnennung="Kreis Herford",
+         url="https://geoportal.kreis-herford.de/wfs/VersorgungEntsorgung?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature"
+             "&TYPENAMES=ms:VerEntsorgungseinrichtungen&OUTPUTFORMAT=text/csv",
+         format="csv", lat="lat", lon="lon", nur=lambda p: p.get("thema") == "Glascontainer",
+         title="{adresse}", details=["{ort}"]),
     dict(key="bonn", name="Bonn", lizenz="CC0", namensnennung="Bundesstadt Bonn",
          url="https://stadtplan.bonn.de/geojson?OD=4726",
          title="{standort}", details=["{bezeichnung}"]),

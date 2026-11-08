@@ -7,6 +7,8 @@ Altglas-Container in Deutschland für die App „Glaskontainer“, wöchentlich 
 - `cells/<breite>_<länge>.json` – Container einer 1 × 1-Grad-Kachel:
   `[id, breite, länge, titel, [details]]` (OpenStreetMap) bzw.
   `[id, breite, länge, titel, [details], quelle]` (nur in einer amtlichen Liste, nicht in OpenStreetMap)
+- `hoefe/<breite>_<länge>.json` – Wertstoffhöfe aus OpenStreetMap (`amenity=recycling` + `recycling_type=centre`)
+- `deponien/<breite>_<länge>.json` – Deponien aus OpenStreetMap (`landuse=landfill`, ohne stillgelegte)
 - `amtlich/<quelle>.json` – letzte erfolgreich geladene Kopie jeder amtlichen Liste (Reserve, falls ein Server ausfällt)
 
 ## Quellen
@@ -29,6 +31,8 @@ OSM-Container entfernt ist, gilt als derselbe Standort und wird nicht doppelt au
 | Essen | Stadt Essen | Datenlizenz Deutschland – Namensnennung 2.0 |
 | Gelsenkirchen | Stadt Gelsenkirchen / Gelsendienste | Datenlizenz Deutschland – Zero 2.0 |
 | Herne | Stadt Herne | Datenlizenz Deutschland – Zero 2.0 |
+| Dorsten | Stadt Dorsten / Entsorgungsbetrieb Dorsten | Datenlizenz Deutschland – Namensnennung 2.0 |
+| Kreis Herford | Kreis Herford | freie Nutzung |
 | Bonn | Bundesstadt Bonn | CC0 |
 | Trier | Stadt Trier / A.R.T. Trier | Datenlizenz Deutschland – Namensnennung 2.0 |
 | Mannheim | Stadt Mannheim | Datenlizenz Deutschland – Namensnennung 2.0 |

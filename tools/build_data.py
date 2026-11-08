@@ -38,9 +38,19 @@ area["ISO3166-1"="DE"][admin_level=2]->.de;
 );
 out center tags;"""
 
+# Weitere Ebenen (Filter in der App): Wertstoffhöfe und Deponien aus OpenStreetMap
+QUERY_HOEFE = """[out:json][timeout:600];
+area["ISO3166-1"="DE"][admin_level=2]->.de;
+nwr["amenity"="recycling"]["recycling_type"="centre"](area.de);
+out center tags;"""
+QUERY_DEPONIEN = """[out:json][timeout:600];
+area["ISO3166-1"="DE"][admin_level=2]->.de;
+nwr["landuse"="landfill"]["disused"!="yes"]["abandoned"!="yes"]["landfill:status"!="closed"](area.de);
+out center tags;"""
 
-def fetch():
-    data = urllib.parse.urlencode({"data": QUERY}).encode()
+
+def fetch(query=QUERY, mindestens=10000):
+    data = urllib.parse.urlencode({"data": query}).encode()
     last = None
     for attempt in range(4):
         for url in SERVERS:
@@ -48,7 +58,7 @@ def fetch():
                 req = urllib.request.Request(url, data=data, headers={"User-Agent": UA})
                 with urllib.request.urlopen(req, timeout=700) as r:
                     result = json.load(r)
-                if len(result.get("elements", [])) < 10000:
+                if len(result.get("elements", [])) < mindestens:
                     raise RuntimeError(f"zu wenige Container ({len(result.get('elements', []))}) – Abfrage unvollständig?")
                 return result
             except Exception as e:  # noqa: BLE001
@@ -78,6 +88,64 @@ def details(tags):
     if "description" in tags:
         out.append(tags["description"])
     return out
+
+
+MATERIAL = [
+    ("glass_bottles", "Altglas"), ("paper", "Papier"), ("clothes", "Altkleider"),
+    ("electrical_appliances", "Elektrogeräte"), ("batteries", "Batterien"), ("green_waste", "Grünschnitt"),
+    ("wood", "Holz"), ("scrap_metal", "Schrott"), ("hazardous_waste", "Sondermüll"), ("rubble", "Bauschutt"),
+]
+
+
+def hof_details(tags):
+    out = []
+    if "opening_hours" in tags:
+        out.append("Öffnungszeiten: " + tags["opening_hours"])
+    if "operator" in tags:
+        out.append("Betreiber: " + tags["operator"])
+    angenommen = [name for key, name in MATERIAL if tags.get("recycling:" + key) == "yes"
+                  or (key == "glass_bottles" and tags.get("recycling:glass") == "yes")]
+    if angenommen:
+        out.append("Nimmt an: " + ", ".join(angenommen))
+    if "addr:street" in tags:
+        out.append(f"{tags['addr:street']} {tags.get('addr:housenumber', '')}".strip()
+                   + (f", {tags['addr:city']}" if "addr:city" in tags else ""))
+    return out
+
+
+def deponie_details(tags):
+    out = []
+    if "operator" in tags:
+        out.append("Betreiber: " + tags["operator"])
+    if "opening_hours" in tags:
+        out.append("Öffnungszeiten: " + tags["opening_hours"])
+    if "description" in tags:
+        out.append(tags["description"])
+    return out
+
+
+def ebene_schreiben(out_dir, ordner, result, titel, details_fn):
+    """Schreibt eine Zusatz-Ebene (Wertstoffhöfe, Deponien) in <ordner>/<lat>_<lon>.json."""
+    cells = {}
+    for el in result["elements"]:
+        lat = el.get("lat", el.get("center", {}).get("lat"))
+        lon = el.get("lon", el.get("center", {}).get("lon"))
+        if lat is None or lon is None:
+            continue
+        tags = el.get("tags", {})
+        row = [f"osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), tags.get("name") or titel, details_fn(tags)]
+        cells.setdefault(f"{math.floor(lat)}_{math.floor(lon)}", []).append(row)
+    pfad = os.path.join(out_dir, ordner)
+    os.makedirs(pfad, exist_ok=True)
+    for name in os.listdir(pfad):
+        os.remove(os.path.join(pfad, name))
+    for key, rows in cells.items():
+        rows.sort(key=lambda r: r[0])
+        with open(os.path.join(pfad, key + ".json"), "w", encoding="utf-8") as f:
+            json.dump({"v": 1, "c": rows}, f, ensure_ascii=False, separators=(",", ":"))
+    anzahl = sum(len(r) for r in cells.values())
+    print(f"{ordner}: {anzahl} in {len(cells)} Kacheln")
+    return {"kacheln": sorted(cells.keys()), "anzahl": anzahl}
 
 
 def _abstand_m(lat1, lon1, lat2, lon2):
@@ -123,9 +191,16 @@ def main(out_dir):
         if lat is None or lon is None:
             continue
         tags = el.get("tags", {})
+        if tags.get("recycling_type") == "centre":
+            continue  # Wertstoffhöfe stehen in der eigenen Ebene "hoefe"
         row = [f"osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), title(tags), details(tags)]
         key = f"{math.floor(lat)}_{math.floor(lon)}"
         cells.setdefault(key, []).append(row)
+
+    ebenen = {
+        "hoefe": ebene_schreiben(out_dir, "hoefe", fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
+        "deponien": ebene_schreiben(out_dir, "deponien", fetch(QUERY_DEPONIEN, 1000), "Deponie", deponie_details),
+    }
 
     # Raster (ca. 110 m) der OSM-Container für den Abgleich
     raster = {}
@@ -176,6 +251,7 @@ def main(out_dir):
         "kacheln": sorted(cells.keys()),
         "lizenz": "Daten © OpenStreetMap-Mitwirkende, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
         "quellen": quellen,
+        "ebenen": ebenen,
     }
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=1)
