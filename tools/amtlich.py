@@ -43,6 +43,16 @@ def _enthaelt(feld, wort):
 LKR_REGENSBURG = ("https://geoportal.landkreis-regensburg.de/ogcapi/datasets/entsorgungseinrichtungen/collections/"
                   "Entsorgungseinrichtungen/items?bulk=true&f=json")
 
+def _rvr(kategorie_id):
+    """WFS-Abfrage beim Regionalverband Ruhr, nur eine POI-Kategorie (statt aller 79.000 POIs)."""
+    import urllib.parse
+    filt = ('<fes:Filter xmlns:fes="http://www.opengis.net/fes/2.0"><fes:PropertyIsEqualTo>'
+            f'<fes:ValueReference>kategorie_id</fes:ValueReference><fes:Literal>{kategorie_id}</fes:Literal>'
+            '</fes:PropertyIsEqualTo></fes:Filter>')
+    return ("https://geodaten.metropoleruhr.de/poi/poi?service=WFS&version=2.0.0&request=GetFeature"
+            "&typeNames=ms:poi_einfach&outputFormat=geojson&srsName=EPSG:4326&FILTER=" + urllib.parse.quote(filt))
+
+
 QUELLEN = [
     dict(key="hamburg", name="Hamburg", lizenz=DL_BY,
          namensnennung="Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
@@ -187,6 +197,87 @@ QUELLEN = [
              "?request=GetFeature&VERSION=2.0.0&SERVICE=WFS&typeNames=Abfallbeseitigung:Deponien",
          format="gml", utm=32, nur=_enthaelt("phase", "Ablagerung"),
          title="{name}", details=["Deponieklasse {klasse}"]),
+    # ---- Regionalverband Ruhr (ganzes Ruhrgebiet), nur die Kategorien Containerstandorte / Recyclinghöfe ----
+    dict(key="rvr-glas", name="Regionalverband Ruhr (Containerstandorte)", lizenz=DL_BY, namensnennung="Regionalverband Ruhr (RVR)",
+         url=_rvr(197028), nur=lambda p: "glas" in (str(p.get("name")) + str(p.get("beschreibung"))).lower(),
+         title="{strasse} {hausnummer}", details=["{beschreibung}", "{ort}"]),
+    dict(key="hof-rvr", ebene="hoefe", name="Regionalverband Ruhr (Recyclinghöfe)", lizenz=DL_BY,
+         namensnennung="Regionalverband Ruhr (RVR)", url=_rvr(197030),
+         title="{name}", details=["{beschreibung}", "{strasse} {hausnummer}, {plz} {ort}", "{link}"]),
+    dict(key="hof-landkreis-rostock", ebene="hoefe", name="Landkreis Rostock (Wertstoffhöfe)", lizenz="CC0",
+         namensnennung="Landkreis Rostock",
+         url="https://geoportal.lkros.de/dienste/wertstoffhoefe?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms:wertstoffhoefe",
+         format="gml", utm=33, title="Wertstoffhof", details=[]),
+    # ---- Kleidercontainer (Ebene "kleider") ----
+    dict(key="kl-hamburg", ebene="kleider", name="Hamburg (Altkleider)", lizenz=DL_BY,
+         namensnennung="Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
+         url="https://geodienste.hamburg.de/HH_WFS_abfall_recycling?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature"
+             "&typeNames=de.hh.up:abfall_recycling_4_textil&outputFormat=application/geo%2Bjson&srsName=EPSG:4326",
+         title="{standort}", details=[]),
+    dict(key="kl-kiel", ebene="kleider", name="Kiel (Altkleider)", lizenz="CC BY 4.0", namensnennung="Landeshauptstadt Kiel",
+         url="https://ims.kiel.de/geodatenextern/services/Stadtplan/LHKielWmsWfs/MapServer/WFSServer"
+             "?request=GetFeature&service=WFS&typeName=Altkleidercontainer&outputFormat=geoJSON",
+         title="{Standort}", details=["{Anmerkung}"]),
+    dict(key="kl-luebeck", ebene="kleider", name="Lübeck (Altkleider)", lizenz="ODbL 1.0", namensnennung="Entsorgungsbetriebe Lübeck",
+         url="https://umap.openstreetmap.de/de/datalayer/50246/06a9800d-f95a-412c-a199-30c6506dc66e/",
+         title="Altkleidercontainer", details=["{description}"]),
+    dict(key="kl-norderstedt", ebene="kleider", name="Norderstedt (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Norderstedt",
+         url="https://geoservice.norderstedt.de/geoserver/pub/ows?service=WFS&version=1.0.0&request=GetFeature"
+             "&typeName=pub:altkleidercontainer&outputFormat=application/json&srsName=EPSG:4326",
+         title="{anschrift}", details=["{bezeich}"]),
+    dict(key="kl-rostock", ebene="kleider", name="Rostock (Altkleider)", lizenz="CC0", namensnennung="Hanse- und Universitätsstadt Rostock",
+         url="https://geo.sv.rostock.de/download/opendata/altkleidercontainer/altkleidercontainer.json",
+         title="{bezeichnung}", details=["Betreiber: {bewirtschafter}"]),
+    dict(key="kl-koeln", ebene="kleider", name="Köln (Altkleider)", lizenz=DL_ZERO, namensnennung="AWB Abfallwirtschaftsbetriebe Köln",
+         url="https://www.awbkoeln.de/geodaten/altkleider/", format="awb-xml",
+         title="{locationname}", details=["{area} – {district}"]),
+    dict(key="kl-muenster", ebene="kleider", name="Münster (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Münster",
+         url="https://raw.githubusercontent.com/od-ms/converter-scripts/master/data/awm-altkleider.geojson",
+         title="{Standort}", details=["{Stadtteil}"]),
+    dict(key="kl-essen", ebene="kleider", name="Essen (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Essen",
+         url="https://opendata.essen.de/sites/default/files/Depotcontainer_2026.geojson",
+         nur=_ja("ALTKLEIDER"), title="{ADRESSE}", details=[]),
+    dict(key="kl-gelsenkirchen", ebene="kleider", name="Gelsenkirchen (Altkleider)", lizenz=DL_ZERO,
+         namensnennung="Stadt Gelsenkirchen / Gelsendienste",
+         url="https://maps.gelsenkirchen.de/geoserver/infrastrukturdatenbank/ogc/features/v1/collections/entsorgung/items?f=json&limit=5000",
+         nur=_enthaelt("Schlagworte", "Altkleider"), title="{Strasse}", details=["{Stadtteil}"]),
+    dict(key="kl-herne", ebene="kleider", name="Herne (Altkleider)", lizenz=DL_ZERO, namensnennung="Stadt Herne",
+         url="https://geodaten.herne.de/geoserver/abfall/entsorgungskarte?SERVICE=WFS&REQUEST=GetFeature"
+             "&TYPENAME=wertstoffsammelstelle&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326",
+         nur=_ja("textil"), title="{standplatz}", details=["{beschreibung}", "{bezirk}"]),
+    dict(key="kl-rvr", ebene="kleider", name="Regionalverband Ruhr (Altkleider)", lizenz=DL_BY, namensnennung="Regionalverband Ruhr (RVR)",
+         url=_rvr(197028), nur=lambda p: "kleider" in (str(p.get("name")) + str(p.get("beschreibung"))).lower(),
+         title="{strasse} {hausnummer}", details=["{name}", "{ort}"]),
+    dict(key="kl-dorsten", ebene="kleider", name="Dorsten (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Dorsten / Entsorgungsbetrieb Dorsten",
+         url="https://geoportal.dorsten.de/cgi-bin/qgis_mapserv.fcgi?map=/var/qgis/AAP-plus/openlayers/"
+             "qgis_EBD_stadtreinigung_extern2.qgs&SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&TYPENAME=Altkleidercontainer"
+             "&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326",
+         title="{Standort}", details=[]),
+    dict(key="kl-herford", ebene="kleider", name="Kreis Herford (Altkleider)", lizenz="freie Nutzung (Kreis Herford)",
+         namensnennung="Kreis Herford",
+         url="https://geoportal.kreis-herford.de/wfs/VersorgungEntsorgung?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature"
+             "&TYPENAMES=ms:VerEntsorgungseinrichtungen&OUTPUTFORMAT=text/csv",
+         format="csv", lat="lat", lon="lon", nur=lambda p: p.get("thema") == "Altkleidercontainer",
+         title="{adresse}", details=["{ort}"]),
+    dict(key="kl-trier", ebene="kleider", name="Trier (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Trier / A.R.T. Trier",
+         url="https://geoportal.trier.de/trier/mod_ogc/wfs_getmap.php?mapfile=abfallentsorgung&SERVICE=WFS&VERSION=1.1.0"
+             "&REQUEST=GetFeature&TYPENAME=ms:altkleidercontainer",
+         format="gml", utm=32, title="{bez}", details=["{beschr}"]),
+    dict(key="kl-mannheim", ebene="kleider", name="Mannheim (Altkleider)", lizenz=DL_BY, namensnennung="Stadt Mannheim",
+         url="https://mannheim.opendatasoft.com/api/explore/v2.1/catalog/datasets/150824-altkleidercontainer-mannheim/exports/geojson",
+         title="{title}", details=["{beschr}"]),
+    dict(key="kl-muenchen", ebene="kleider", name="München (Altkleider)", lizenz=DL_BY,
+         namensnennung="Landeshauptstadt München, AWM / GeodatenService München",
+         url="https://geoportal.muenchen.de/geoserver/gsm_wfs/ows?service=WFS&version=1.0.0&request=GetFeature"
+             "&typeName=gsm_wfs:awm_container&outputFormat=application/json&srsName=EPSG:4326",
+         nur=_ja("altkleider"), title="{adresse}", details=["Container: {altkleider}"]),
+    dict(key="kl-regensburg", ebene="kleider", name="Regensburg (Altkleider)", lizenz="CC BY 4.0", namensnennung="Stadt Regensburg",
+         url="https://mapservice.regensburg.de/cgi-bin/mapserv?map=/data/ows/maps/kleider_wfs.map&VERSION=1.0.0"
+             "&outputformat=geojson&SERVICE=WFS&REQUEST=GetFeature&TYPENAME=kleider",
+         utm=32, title="{BEZEICHNUNG}", details=["{LAGEBESCHREIBUNG}"]),
+    dict(key="kl-memmingen", ebene="kleider", name="Memmingen (Altkleider)", lizenz="CC BY 4.0", namensnennung="Stadt Memmingen",
+         url="https://www.memmingen.de/fileadmin/opendata/amt54_abfall/Memmingen_Wertstoffcontainer_gpkg.zip",
+         format="gpkg-zip", utm=32, nur=_ja("Altkleider"), title="{Lage}", details=[]),
 ]
 
 
@@ -385,6 +476,20 @@ def _nrw_deponien(data):
     return out
 
 
+def _awb_xml(data):
+    """AWB Köln: <address> mit <coordinates>breite,länge</coordinates>."""
+    import xml.etree.ElementTree as ET
+    out = []
+    for a in ET.fromstring(data).iter("address"):
+        werte = {c.tag: (c.text or "").strip() for c in a}
+        try:
+            lat, lon = (float(x) for x in werte.get("coordinates", "").split(","))
+        except ValueError:
+            continue
+        out.append((lon, lat, werte))
+    return out
+
+
 def utm_zu_gps(e, n, zone):
     """Rechts-/Hochwert (ETRS89 / UTM) → (Breite, Länge). Genauigkeit ca. 1 m (wie in der App)."""
     a = 6378137.0
@@ -448,6 +553,8 @@ def rohdaten_lesen(src, data):
         return _shp_zip(data)
     if fmt == "nrw-deponien":
         return _nrw_deponien(data)
+    if fmt == "awb-xml":
+        return _awb_xml(data)
     return _geojson(data)
 
 

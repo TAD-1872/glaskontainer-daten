@@ -9,6 +9,7 @@ Altglas-Container in Deutschland für die App „Glaskontainer“, wöchentlich 
   `[id, breite, länge, titel, [details], quelle]` (nur in einer amtlichen Liste, nicht in OpenStreetMap)
 - `hoefe/<breite>_<länge>.json` – Wertstoffhöfe aus OpenStreetMap (`amenity=recycling` + `recycling_type=centre`)
 - `deponien/<breite>_<länge>.json` – Deponien aus OpenStreetMap (`landuse=landfill`, ohne stillgelegte)
+- `kleider/<breite>_<länge>.json` – Kleidercontainer (OSM `recycling:clothes=yes` + amtliche Listen; IDs mit Vorsilbe `kl-`)
 - `amtlich/<quelle>.json` – letzte erfolgreich geladene Kopie jeder amtlichen Liste (Reserve, falls ein Server ausfällt)
 
 ## Quellen
@@ -46,6 +47,13 @@ OSM-Container entfernt ist, gilt als derselbe Standort und wird nicht doppelt au
 amtliche Öffnungszeiten ersetzen die aus OSM): Hamburg (DL-DE BY 2.0), Kiel (CC BY 4.0), Lübeck – Entsorgungsbetriebe
 Lübeck (ODbL), Aachen (DL-DE BY 2.0), Herne (DL-DE Zero 2.0), Dresden (DL-DE BY 2.0), München – AWM (DL-DE BY 2.0),
 Landkreis Regensburg (CC0).
+
+**Regionalverband Ruhr** (DL-DE BY 2.0): Containerstandorte und Recyclinghöfe im ganzen Ruhrgebiet;
+**Landkreis Rostock** (CC0): Wertstoffhöfe.
+
+**Kleidercontainer** (Ebene `kleider`): Hamburg, Kiel, Lübeck, Norderstedt, Rostock, Köln – AWB (DL-DE Zero 2.0),
+Münster, Essen, Gelsenkirchen, Herne, Regionalverband Ruhr, Dorsten, Kreis Herford, Trier, Mannheim, München,
+Regensburg, Memmingen (Lizenzen wie bei den Glascontainern derselben Herausgeber).
 
 **Deponien** (Ebene `deponien`, nur in der Ablagerungsphase; Abgleich mit OSM bis 800 m):
 Nordrhein-Westfalen – OpenAddisWeb, LANUK NRW (DL-DE BY 2.0), Brandenburg – Landesamt für Umwelt (DL-DE BY 2.0),

@@ -43,6 +43,10 @@ QUERY_HOEFE = """[out:json][timeout:600];
 area["ISO3166-1"="DE"][admin_level=2]->.de;
 nwr["amenity"="recycling"]["recycling_type"="centre"](area.de);
 out center tags;"""
+QUERY_KLEIDER = """[out:json][timeout:600];
+area["ISO3166-1"="DE"][admin_level=2]->.de;
+nwr["amenity"="recycling"]["recycling:clothes"="yes"]["recycling_type"!="centre"](area.de);
+out center tags;"""
 QUERY_DEPONIEN = """[out:json][timeout:600];
 area["ISO3166-1"="DE"][admin_level=2]->.de;
 nwr["landuse"="landfill"]["disused"!="yes"]["abandoned"!="yes"]["landfill:status"!="closed"](area.de);
@@ -113,6 +117,19 @@ def hof_details(tags):
     return out
 
 
+def kleider_details(tags):
+    out = []
+    if "operator" in tags:
+        out.append("Betreiber: " + tags["operator"])
+    if tags.get("recycling:shoes") == "yes":
+        out.append("Auch Schuhe")
+    if tags.get("recycling:glass_bottles") == "yes" or tags.get("recycling:glass") == "yes":
+        out.append("Auch Glascontainer")
+    if "description" in tags:
+        out.append(tags["description"])
+    return out
+
+
 def deponie_details(tags):
     out = []
     if "operator" in tags:
@@ -124,7 +141,7 @@ def deponie_details(tags):
     return out
 
 
-def ebene_zeilen(result, titel, details_fn):
+def ebene_zeilen(result, titel, details_fn, praefix=""):
     """OSM-Ergebnis → Kacheln {"<lat>_<lon>": [zeilen]} für eine Zusatz-Ebene (Wertstoffhöfe, Deponien)."""
     cells = {}
     for el in result["elements"]:
@@ -133,7 +150,7 @@ def ebene_zeilen(result, titel, details_fn):
         if lat is None or lon is None:
             continue
         tags = el.get("tags", {})
-        row = [f"osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), tags.get("name") or titel, details_fn(tags)]
+        row = [f"{praefix}osm-{el['type']}-{el['id']}", round(lat, 6), round(lon, 6), tags.get("name") or titel, details_fn(tags)]
         cells.setdefault(f"{math.floor(lat)}_{math.floor(lon)}", []).append(row)
     return cells
 
@@ -186,7 +203,7 @@ def amtliche_listen(out_dir):
 
 
 # Wie nah ein amtlicher Eintrag an einem OSM-Eintrag sein muss, um als derselbe Ort zu gelten (Meter)
-GLEICH_M_EBENE = {"glas": GLEICH_M, "hoefe": 250, "deponien": 800}
+GLEICH_M_EBENE = {"glas": GLEICH_M, "hoefe": 250, "deponien": 800, "kleider": GLEICH_M}
 
 
 def _zusammenfuehren(best, det, name):
@@ -223,6 +240,8 @@ def main(out_dir):
         "glas": cells,
         "hoefe": ebene_zeilen(fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
         "deponien": ebene_zeilen(fetch(QUERY_DEPONIEN, 1000), "Deponie", deponie_details),
+        # eigene IDs, weil derselbe OSM-Standort oft auch ein Glascontainer ist
+        "kleider": ebene_zeilen(fetch(QUERY_KLEIDER, 10000), "Kleidercontainer", kleider_details, "kl-"),
     }
 
     # Raster (ca. 110 m) der OSM-Einträge je Ebene für den Abgleich
@@ -249,7 +268,7 @@ def main(out_dir):
                         if d <= best_d:
                             best, best_d = row, d
             if best is not None:
-                if ebene == "glas":
+                if ebene in ("glas", "kleider"):
                     hinweis = "Auch in der amtlichen Liste: " + src["name"]
                     if hinweis not in best[4]:
                         best[4].append(hinweis)
@@ -257,7 +276,10 @@ def main(out_dir):
                     _zusammenfuehren(best, det, src["name"])
                 continue
             key = f"{math.floor(lat)}_{math.floor(lon)}"
-            ebenen_zellen[ebene].setdefault(key, []).append([sid, lat, lon, titel, list(det), src["key"]])
+            zeile = [sid, lat, lon, titel, list(det), src["key"]]
+            ebenen_zellen[ebene].setdefault(key, []).append(zeile)
+            # auch für spätere Listen merken (z. B. Stadt und Regionalverband mit denselben Standorten)
+            raster[ebene].setdefault((i, j), []).append(zeile)
             neu += 1
         quellen.append({
             "key": src["key"], "name": src["name"], "lizenz": src["lizenz"],
@@ -269,6 +291,7 @@ def main(out_dir):
     ebenen = {
         "hoefe": kacheln_schreiben(out_dir, "hoefe", ebenen_zellen["hoefe"], stand),
         "deponien": kacheln_schreiben(out_dir, "deponien", ebenen_zellen["deponien"], stand),
+        "kleider": kacheln_schreiben(out_dir, "kleider", ebenen_zellen["kleider"], stand),
     }
     meta = {
         "v": 1,
@@ -281,7 +304,7 @@ def main(out_dir):
     }
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=1)
-    for e in ("glas", "hoefe", "deponien"):
+    for e in ("glas", "hoefe", "deponien", "kleider"):
         print(f"{e}: davon {sum(q['zusaetzlich'] for q in quellen if q['ebene'] == e)} nur aus amtlichen Listen")
 
 
