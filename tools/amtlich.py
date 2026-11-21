@@ -208,6 +208,20 @@ QUELLEN = [
          namensnennung="Landkreis Rostock",
          url="https://geoportal.lkros.de/dienste/wertstoffhoefe?service=WFS&version=2.0.0&request=GetFeature&typeNames=ms:wertstoffhoefe",
          format="gml", utm=33, title="Wertstoffhof", details=[]),
+    dict(key="hof-vorpommern-greifswald", ebene="hoefe", name="Landkreis Vorpommern-Greifswald (Wertstoffhöfe)", lizenz=DL_BY,
+         namensnennung="©Landkreis Vorpommern-Greifswald",
+         url="https://service.geoportal-vg.de/dienste/wfs/abfallwirtschaft?SERVICE=WFS&VERSION=2.0.0"
+             "&REQUEST=GetFeature&TYPENAMES=ms:wertstoffhoefe",
+         format="gml", utm=33, title="{name}",
+         details=["{bemerkung}", "{strasse_name} {hausnummer}", "{gemeinde_name}", "Telefon: {telefon}", "{website}"]),
+    dict(key="hof-cottbus", ebene="hoefe", name="Cottbus (Wertstoffhöfe)", lizenz=DL_BY,
+         namensnennung="Stadt Cottbus/Chóśebuz",
+         url="https://datenportal.cottbus.de/server/rest/services/FB70/station%C3%A4re_Annahmestellen/FeatureServer/0/query"
+             "?where=1%3D1&outFields=*&outSR=4326&f=geojson",
+         nur=lambda p: any(w in str(p.get("objekt")) for w in ("Wertstoffhof", "Schadstoff")),
+         title="{objekt}",
+         details=["Öffnungszeiten März–November: {maerz_november}", "Öffnungszeiten Dezember–Februar: {dezember_februar}",
+                  "{Info} {info_2}", "{bemerkung}", "{standort}, Cottbus", "Telefon: {telefon}"]),
     # ---- Kleidercontainer (Ebene "kleider") ----
     dict(key="kl-hamburg", ebene="kleider", name="Hamburg (Altkleider)", lizenz=DL_BY,
          namensnennung="Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",

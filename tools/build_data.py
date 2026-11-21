@@ -43,6 +43,17 @@ QUERY_HOEFE = """[out:json][timeout:600];
 area["ISO3166-1"="DE"][admin_level=2]->.de;
 nwr["amenity"="recycling"]["recycling_type"="centre"](area.de);
 out center tags;"""
+# Wertstoffhöfe, die in OSM anders eingetragen sind: als Wertstoffcontainer mit Namen „Wertstoffhof …“
+# oder als Umladestation (waste_transfer_station) mit passendem Namen (ohne Namen meist nur für Gewerbe)
+QUERY_HOEFE_EXTRA = """[out:json][timeout:600];
+area["ISO3166-1"="DE"][admin_level=2]->.de;
+(
+  nwr["amenity"="recycling"]["recycling_type"!="centre"]
+     ["name"~"Wertstoffhof|Recyclinghof|Wertstoffzentrum|Recyclingzentrum|Wertstoffsammelstelle|Entsorgungszentrum",i](area.de);
+  nwr["amenity"="waste_transfer_station"]["access"!="private"]
+     ["name"~"Wertstoff|Recycling|Entsorgungszentrum|Annahmestelle",i](area.de);
+);
+out center tags;"""
 QUERY_KLEIDER = """[out:json][timeout:600];
 area["ISO3166-1"="DE"][admin_level=2]->.de;
 nwr["amenity"="recycling"]["recycling:clothes"="yes"]["recycling_type"!="centre"](area.de);
@@ -155,6 +166,29 @@ def ebene_zeilen(result, titel, details_fn, praefix=""):
     return cells
 
 
+def hoefe_mit_extra(hoefe, extra, grenze_m=250):
+    """Zusätzliche OSM-Wertstoffhöfe aufnehmen, außer sie liegen nah (≤ 250 m) an einem schon bekannten Hof."""
+    raster = {}
+    for rows in hoefe.values():
+        for r in rows:
+            raster.setdefault((math.floor(r[1] * 100), math.floor(r[2] * 100)), []).append(r)
+    neu = 0
+    for key, rows in extra.items():
+        for r in rows:
+            i, j = math.floor(r[1] * 100), math.floor(r[2] * 100)
+            nah = any(
+                _abstand_m(r[1], r[2], o[1], o[2]) <= grenze_m
+                for di in (-1, 0, 1) for dj in (-1, 0, 1) for o in raster.get((i + di, j + dj), [])
+            )
+            if nah:
+                continue
+            hoefe.setdefault(key, []).append(r)
+            raster.setdefault((i, j), []).append(r)
+            neu += 1
+    print(f"hoefe: {neu} zusätzliche aus OSM (anders eingetragen)")
+    return hoefe
+
+
 def kacheln_schreiben(out_dir, ordner, cells, stand):
     pfad = os.path.join(out_dir, ordner)
     os.makedirs(pfad, exist_ok=True)
@@ -238,7 +272,11 @@ def main(out_dir):
 
     ebenen_zellen = {
         "glas": cells,
-        "hoefe": ebene_zeilen(fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
+        "hoefe": hoefe_mit_extra(
+            ebene_zeilen(fetch(QUERY_HOEFE, 2000), "Wertstoffhof", hof_details),
+            # eigene IDs „hof-…“, weil derselbe OSM-Punkt auch als Glascontainer in cells/ stehen kann
+            ebene_zeilen(fetch(QUERY_HOEFE_EXTRA, 1), "Wertstoffhof", hof_details, "hof-"),
+        ),
         "deponien": ebene_zeilen(fetch(QUERY_DEPONIEN, 1000), "Deponie", deponie_details),
         # eigene IDs, weil derselbe OSM-Standort oft auch ein Glascontainer ist
         "kleider": ebene_zeilen(fetch(QUERY_KLEIDER, 10000), "Kleidercontainer", kleider_details, "kl-"),

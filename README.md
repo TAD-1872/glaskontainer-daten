@@ -46,7 +46,9 @@ OSM-Container entfernt ist, gilt als derselbe Standort und wird nicht doppelt au
 **Wertstoffhöfe / Recyclinghöfe** (Ebene `hoefe`; ein amtlicher Hof ≤ 250 m von einem OSM-Hof ergänzt diesen,
 amtliche Öffnungszeiten ersetzen die aus OSM): Hamburg (DL-DE BY 2.0), Kiel (CC BY 4.0), Lübeck – Entsorgungsbetriebe
 Lübeck (ODbL), Aachen (DL-DE BY 2.0), Herne (DL-DE Zero 2.0), Dresden (DL-DE BY 2.0), München – AWM (DL-DE BY 2.0),
-Landkreis Regensburg (CC0).
+Landkreis Regensburg (CC0), Landkreis Vorpommern-Greifswald (DL-DE BY 2.0), Cottbus (DL-DE BY 2.0).
+Zusätzlich Wertstoffhöfe, die in OpenStreetMap als Container mit Namen „Wertstoffhof …“ oder als Umladestation
+(`waste_transfer_station`) eingetragen sind (IDs `hof-…`, nur wenn kein anderer Hof ≤ 250 m entfernt ist).
 
 **Regionalverband Ruhr** (DL-DE BY 2.0): Containerstandorte und Recyclinghöfe im ganzen Ruhrgebiet;
 **Landkreis Rostock** (CC0): Wertstoffhöfe.
