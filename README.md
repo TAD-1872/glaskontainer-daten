@@ -57,7 +57,8 @@ Zusätzlich Wertstoffhöfe, die in OpenStreetMap als Container mit Namen „Wert
 Münster, Essen, Gelsenkirchen, Herne, Regionalverband Ruhr, Dorsten, Kreis Herford, Trier, Mannheim, München,
 Regensburg, Memmingen (Lizenzen wie bei den Glascontainern derselben Herausgeber).
 
-**Deponien** (Ebene `deponien`, nur in der Ablagerungsphase; Abgleich mit OSM bis 800 m):
+**Deponien** (Ebene `deponien`, nur in der Ablagerungsphase; Abgleich mit OSM bis 800 m; aus der Deponieklasse
+wird ein Hinweis „Darf annehmen: …“ erzeugt):
 Nordrhein-Westfalen – OpenAddisWeb, LANUK NRW (DL-DE BY 2.0), Brandenburg – Landesamt für Umwelt (DL-DE BY 2.0),
 Saarland – Umweltministerium (CC BY 4.0).
 

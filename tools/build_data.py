@@ -12,6 +12,7 @@ Aufruf:  python tools/build_data.py <ausgabeordner>
 """
 import json
 import math
+import re
 import os
 import sys
 import time
@@ -106,10 +107,48 @@ def details(tags):
 
 
 MATERIAL = [
-    ("glass_bottles", "Altglas"), ("paper", "Papier"), ("clothes", "Altkleider"),
-    ("electrical_appliances", "Elektrogeräte"), ("batteries", "Batterien"), ("green_waste", "Grünschnitt"),
-    ("wood", "Holz"), ("scrap_metal", "Schrott"), ("hazardous_waste", "Sondermüll"), ("rubble", "Bauschutt"),
+    ("glass_bottles", "Altglas"), ("paper", "Papier"), ("cardboard", "Pappe/Kartonagen"), ("clothes", "Altkleider"),
+    ("shoes", "Schuhe"), ("plastic_packaging", "Verpackungen (Gelber Sack)"), ("plastic", "Kunststoffe"),
+    ("polystyrene", "Styropor"), ("cans", "Dosen"), ("scrap_metal", "Schrott/Metall"),
+    ("electrical_appliances", "Elektrogeräte"), ("small_appliances", "Elektrokleingeräte"),
+    ("white_goods", "Großgeräte (Kühlschrank, Waschmaschine)"), ("mobile_phones", "Handys"),
+    ("printer_cartridges", "Druckerpatronen"), ("batteries", "Batterien"), ("car_batteries", "Autobatterien"),
+    ("fluorescent_tubes", "Leuchtstoffröhren"), ("low_energy_bulbs", "Energiesparlampen"),
+    ("green_waste", "Grünschnitt"), ("garden_waste", "Gartenabfälle"), ("christmas_trees", "Weihnachtsbäume"),
+    ("wood", "Holz"), ("furniture", "Möbel/Sperrmüll"), ("mattresses", "Matratzen"), ("tyres", "Altreifen"),
+    ("cooking_oil", "Speisefett/-öl"), ("engine_oil", "Altöl"), ("paint", "Farben/Lacke"),
+    ("hazardous_waste", "Sondermüll/Schadstoffe"), ("rubble", "Bauschutt"), ("plasterboard", "Gipskarton"),
+    ("asbestos", "Asbest"), ("cds", "CDs/DVDs"), ("corks", "Korken"),
 ]
+
+# Was eine Deponie grundsätzlich annehmen darf (Deponieverordnung). Viele Deponien nehmen nichts von Privatleuten an.
+DEPONIEKLASSEN = {
+    "0": "unbelasteter Bauschutt, Boden, Steine",
+    "I": "gering belastete mineralische Abfälle (z. B. Bauschutt, Boden)",
+    "II": "vorbehandelte Siedlungsabfälle, belastete mineralische Abfälle",
+    "III": "gefährliche Abfälle (nur Gewerbe)",
+}
+_ROEMISCH = {"1": "I", "2": "II", "3": "III", "0": "0", "I": "I", "II": "II", "III": "III"}
+
+
+def deponien_erklaeren(cells):
+    """Aus „Deponieklasse …“ einen lesbaren Hinweis machen, was die Deponie annehmen darf."""
+    for rows in cells.values():
+        for row in rows:
+            det = row[4]
+            if any(d.startswith("Nimmt an") for d in det):
+                continue
+            klassen = []
+            for d in det:
+                if d.startswith("Deponieklasse "):
+                    for k in re.split(r"[,/ ]+", d[len("Deponieklasse "):]):
+                        k = _ROEMISCH.get(k.strip().upper())
+                        if k and k not in klassen:
+                            klassen.append(k)
+            if klassen:
+                det.append("Darf annehmen: " + "; ".join(f"Klasse {k}: {DEPONIEKLASSEN[k]}" for k in klassen))
+            det.append("Ob Privatleute anliefern dürfen, vorher beim Betreiber erfragen.")
+    return cells
 
 
 def hof_details(tags):
@@ -147,6 +186,9 @@ def deponie_details(tags):
         out.append("Betreiber: " + tags["operator"])
     if "opening_hours" in tags:
         out.append("Öffnungszeiten: " + tags["opening_hours"])
+    angenommen = [name for key, name in MATERIAL if tags.get("recycling:" + key) == "yes"]
+    if angenommen:
+        out.append("Nimmt an: " + ", ".join(angenommen))
     if "description" in tags:
         out.append(tags["description"])
     return out
@@ -328,7 +370,7 @@ def main(out_dir):
     glas = kacheln_schreiben(out_dir, "cells", cells, stand)
     ebenen = {
         "hoefe": kacheln_schreiben(out_dir, "hoefe", ebenen_zellen["hoefe"], stand),
-        "deponien": kacheln_schreiben(out_dir, "deponien", ebenen_zellen["deponien"], stand),
+        "deponien": kacheln_schreiben(out_dir, "deponien", deponien_erklaeren(ebenen_zellen["deponien"]), stand),
         "kleider": kacheln_schreiben(out_dir, "kleider", ebenen_zellen["kleider"], stand),
     }
     meta = {
