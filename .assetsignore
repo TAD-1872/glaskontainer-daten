@@ -1,0 +1,10 @@
+# Nicht bei Cloudflare veröffentlichen (nur die Daten-Dateien sollen online sein)
+.git
+.github
+.gitignore
+.assetsignore
+wrangler.jsonc
+tools
+__pycache__
+*.pyc
+README.md

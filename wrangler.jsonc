@@ -1,0 +1,9 @@
+// Cloudflare: veröffentlicht die Container-Dateien (nur Dateien, kein Programm).
+// Der Worker heißt im Cloudflare-Konto "glaskontainer"; bei jedem Push auf main wird neu veröffentlicht.
+{
+  "name": "glaskontainer",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "."
+  }
+}
