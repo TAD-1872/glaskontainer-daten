@@ -1,7 +1,7 @@
 {
  "v": 1,
- "stand": "2026-11-21T20:15:58Z",
- "anzahl": 65904,
+ "stand": "2026-11-23T04:22:58Z",
+ "anzahl": 65934,
  "kacheln": [
   "47_10",
   "47_11",
@@ -79,7 +79,7 @@
    "name": "Hamburg",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 793,
    "zusaetzlich": 128
@@ -99,7 +99,7 @@
    "name": "Lübeck",
    "lizenz": "ODbL 1.0",
    "namensnennung": "Entsorgungsbetriebe Lübeck",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 555,
    "zusaetzlich": 42
@@ -109,7 +109,7 @@
    "name": "Norderstedt",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Norderstedt",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 28,
    "zusaetzlich": 8
@@ -119,7 +119,7 @@
    "name": "Rostock",
    "lizenz": "CC0",
    "namensnennung": "Hanse- und Universitätsstadt Rostock",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 284,
    "zusaetzlich": 89
@@ -129,7 +129,7 @@
    "name": "Landkreis Vorpommern-Greifswald",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "©Landkreis Vorpommern-Greifswald",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 13,
    "zusaetzlich": 13
@@ -139,7 +139,7 @@
    "name": "Aachen",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Aachen",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 190,
    "zusaetzlich": 34
@@ -149,7 +149,7 @@
    "name": "Münster",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Münster",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 249,
    "zusaetzlich": 69
@@ -159,7 +159,7 @@
    "name": "Grevenbroich",
    "lizenz": "CC0",
    "namensnennung": "Stadt Grevenbroich / Rhein-Kreis Neuss",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 78,
    "zusaetzlich": 19
@@ -169,7 +169,7 @@
    "name": "Meerbusch",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Meerbusch / Rhein-Kreis Neuss",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 92,
    "zusaetzlich": 38
@@ -189,7 +189,7 @@
    "name": "Gelsenkirchen",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Gelsenkirchen / Gelsendienste",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 315,
    "zusaetzlich": 86
@@ -199,7 +199,7 @@
    "name": "Herne",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Herne",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 212,
    "zusaetzlich": 19
@@ -209,7 +209,7 @@
    "name": "Dorsten",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Dorsten / Entsorgungsbetrieb Dorsten",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 115,
    "zusaetzlich": 30
@@ -219,7 +219,7 @@
    "name": "Kreis Herford",
    "lizenz": "freie Nutzung (Kreis Herford)",
    "namensnennung": "Kreis Herford",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 238,
    "zusaetzlich": 111
@@ -229,7 +229,7 @@
    "name": "Trier",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Trier / A.R.T. Trier",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 107,
    "zusaetzlich": 23
@@ -239,7 +239,7 @@
    "name": "Mannheim",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Mannheim",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 292,
    "zusaetzlich": 86
@@ -249,7 +249,7 @@
    "name": "München",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 832,
    "zusaetzlich": 52
@@ -259,7 +259,7 @@
    "name": "Regensburg",
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Regensburg",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 134,
    "zusaetzlich": 53
@@ -269,7 +269,7 @@
    "name": "Amberg",
    "lizenz": "CC BY 3.0",
    "namensnennung": "Stadt Amberg",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 36,
    "zusaetzlich": 14
@@ -279,7 +279,7 @@
    "name": "Memmingen",
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Memmingen",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 46,
    "zusaetzlich": 28
@@ -299,7 +299,7 @@
    "name": "Hamburg (Recyclinghöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 12,
    "zusaetzlich": 0
@@ -319,7 +319,7 @@
    "name": "Lübeck (Wertstoffhöfe)",
    "lizenz": "ODbL 1.0",
    "namensnennung": "Entsorgungsbetriebe Lübeck",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 3,
    "zusaetzlich": 0
@@ -329,7 +329,7 @@
    "name": "Aachen (Recyclinghöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Aachen / Aachener Stadtbetrieb",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 3,
    "zusaetzlich": 1
@@ -339,7 +339,7 @@
    "name": "Herne (Wertstoffhof)",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Herne",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 1,
    "zusaetzlich": 0
@@ -349,7 +349,7 @@
    "name": "Dresden (Wertstoffhöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landeshauptstadt Dresden",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 15,
    "zusaetzlich": 4
@@ -359,7 +359,7 @@
    "name": "München (Wertstoffhöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 12,
    "zusaetzlich": 0
@@ -379,7 +379,7 @@
    "name": "Nordrhein-Westfalen (Deponien)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Land NRW / Landesamt für Natur, Umwelt und Klima (OpenAddisWeb)",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "deponien",
    "anzahl": 98,
    "zusaetzlich": 39
@@ -389,7 +389,7 @@
    "name": "Brandenburg (Deponien)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landesamt für Umwelt Brandenburg (LfU)",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "deponien",
    "anzahl": 12,
    "zusaetzlich": 4
@@ -399,7 +399,7 @@
    "name": "Saarland (Deponien)",
    "lizenz": "CC BY 4.0",
    "namensnennung": "Ministerium für Umwelt, Klima, Mobilität, Agrar und Verbraucherschutz des Saarlandes",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "deponien",
    "anzahl": 22,
    "zusaetzlich": 14
@@ -409,7 +409,7 @@
    "name": "Regionalverband Ruhr (Containerstandorte)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Regionalverband Ruhr (RVR)",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "glas",
    "anzahl": 642,
    "zusaetzlich": 83
@@ -419,17 +419,17 @@
    "name": "Regionalverband Ruhr (Recyclinghöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Regionalverband Ruhr (RVR)",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 97,
-   "zusaetzlich": 27
+   "zusaetzlich": 28
   },
   {
    "key": "hof-landkreis-rostock",
    "name": "Landkreis Rostock (Wertstoffhöfe)",
    "lizenz": "CC0",
    "namensnennung": "Landkreis Rostock",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 11,
    "zusaetzlich": 6
@@ -439,7 +439,7 @@
    "name": "Landkreis Vorpommern-Greifswald (Wertstoffhöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "©Landkreis Vorpommern-Greifswald",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 17,
    "zusaetzlich": 9
@@ -449,7 +449,7 @@
    "name": "Cottbus (Wertstoffhöfe)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Cottbus/Chóśebuz",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "hoefe",
    "anzahl": 4,
    "zusaetzlich": 1
@@ -459,7 +459,7 @@
    "name": "Hamburg (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Freie und Hansestadt Hamburg, Behörde für Umwelt und Energie",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 47,
    "zusaetzlich": 36
@@ -479,7 +479,7 @@
    "name": "Lübeck (Altkleider)",
    "lizenz": "ODbL 1.0",
    "namensnennung": "Entsorgungsbetriebe Lübeck",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 132,
    "zusaetzlich": 32
@@ -489,7 +489,7 @@
    "name": "Norderstedt (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Norderstedt",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 1,
    "zusaetzlich": 0
@@ -499,7 +499,7 @@
    "name": "Rostock (Altkleider)",
    "lizenz": "CC0",
    "namensnennung": "Hanse- und Universitätsstadt Rostock",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 99,
    "zusaetzlich": 40
@@ -509,17 +509,17 @@
    "name": "Köln (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "AWB Abfallwirtschaftsbetriebe Köln",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 534,
-   "zusaetzlich": 212
+   "zusaetzlich": 213
   },
   {
    "key": "kl-muenster",
    "name": "Münster (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Münster",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 23,
    "zusaetzlich": 12
@@ -539,7 +539,7 @@
    "name": "Gelsenkirchen (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Gelsenkirchen / Gelsendienste",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 207,
    "zusaetzlich": 79
@@ -549,7 +549,7 @@
    "name": "Herne (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Zero 2.0",
    "namensnennung": "Stadt Herne",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 96,
    "zusaetzlich": 7
@@ -559,7 +559,7 @@
    "name": "Regionalverband Ruhr (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Regionalverband Ruhr (RVR)",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 359,
    "zusaetzlich": 41
@@ -569,7 +569,7 @@
    "name": "Dorsten (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Dorsten / Entsorgungsbetrieb Dorsten",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 67,
    "zusaetzlich": 26
@@ -579,7 +579,7 @@
    "name": "Kreis Herford (Altkleider)",
    "lizenz": "freie Nutzung (Kreis Herford)",
    "namensnennung": "Kreis Herford",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 35,
    "zusaetzlich": 22
@@ -589,7 +589,7 @@
    "name": "Trier (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Trier / A.R.T. Trier",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 38,
    "zusaetzlich": 15
@@ -599,7 +599,7 @@
    "name": "Mannheim (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Stadt Mannheim",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 212,
    "zusaetzlich": 89
@@ -609,7 +609,7 @@
    "name": "München (Altkleider)",
    "lizenz": "Datenlizenz Deutschland – Namensnennung 2.0",
    "namensnennung": "Landeshauptstadt München, AWM / GeodatenService München",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 256,
    "zusaetzlich": 70
@@ -619,7 +619,7 @@
    "name": "Regensburg (Altkleider)",
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Regensburg",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 111,
    "zusaetzlich": 63
@@ -629,7 +629,7 @@
    "name": "Memmingen (Altkleider)",
    "lizenz": "CC BY 4.0",
    "namensnennung": "Stadt Memmingen",
-   "stand": "2026-11-21",
+   "stand": "2026-11-23",
    "ebene": "kleider",
    "anzahl": 22,
    "zusaetzlich": 16
@@ -771,7 +771,7 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 3793
+   "anzahl": 3792
   },
   "kleider": {
    "kacheln": [
@@ -842,7 +842,7 @@
     "54_8",
     "54_9"
    ],
-   "anzahl": 41003
+   "anzahl": 41009
   }
  }
 }
